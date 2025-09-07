@@ -8,15 +8,94 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Admin{
-  id Int @id @default(autoincrement())
-  email String @unique 
-  password String
-  createdAt DateTime @default(now())
+// schema.prisma
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+
+  // Admin creates classes, teachers, and students
+  createdClasses  Class[]
+  createdTeachers Teacher[]
+  createdStudents Student[]
 }
 
-model Class{
-  id Int @id @default(autoincrement())
-  name String @unique
-  createdAt DateTime @default(now())
+model Teacher {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+
+  createdById String?
+  createdBy   Admin?   @relation(fields: [createdById], references: [id])
+
+  // Relations
+  subjectsTaught TeacherSubjectClass[]
 }
+
+model Student {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+
+  createdById String?
+  createdBy   Admin?   @relation(fields: [createdById], references: [id])
+
+  // Relations
+  enrollments Enrollment[]
+}
+
+model Class {
+  id        String   @id @default(cuid())
+  name      String
+  section   String?
+
+  createdById String?
+  createdBy   Admin? @relation(fields: [createdById], references: [id])
+
+  // Relations
+  subjects           Subject[]
+  students           Enrollment[]
+  teacherAssignments TeacherSubjectClass[] 
+}
+
+
+model Subject {
+  id        String   @id @default(cuid())
+  name      String
+  classId   String
+  class     Class     @relation(fields: [classId], references: [id])
+
+  // Relations
+  teachers  TeacherSubjectClass[]
+  students  Enrollment[]
+}
+
+model TeacherSubjectClass {
+  id         String   @id @default(cuid())
+  teacherId  String
+  subjectId  String
+  classId    String
+
+  teacher    Teacher  @relation(fields: [teacherId], references: [id])
+  subject    Subject  @relation(fields: [subjectId], references: [id])
+  class      Class    @relation(fields: [classId], references: [id])
+
+  @@unique([teacherId, subjectId, classId])
+}
+
+model Enrollment {
+  id         String   @id @default(cuid())
+  studentId  String
+  subjectId  String
+  classId    String
+
+  student    Student  @relation(fields: [studentId], references: [id])
+  subject    Subject  @relation(fields: [subjectId], references: [id])
+  class      Class    @relation(fields: [classId], references: [id])
+
+  @@unique([studentId, subjectId, classId])
+}
+
