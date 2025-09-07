@@ -10,7 +10,7 @@ const client=new PrismaClient();
 app.listen(3000, () => console.log("Server started on port 3000"));
 
 async function createClass() {
-  const Admin=await client.Admin.create({data:{email:"admin@gmail.com",password:"admin"}});
+  const Admin=await client.Admin.create({data:{email:"admin1@gmail.com",password:"admin"}});
 }
 
 createClass()
