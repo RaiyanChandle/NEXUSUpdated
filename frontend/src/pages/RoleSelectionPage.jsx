@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const roles = [
   {
@@ -19,6 +20,7 @@ const roles = [
 ];
 
 const RoleSelectionPage = () => {
+  const navigate=useNavigate();
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-violet-950 via-violet-900 to-violet-800 text-white font-poppins px-4">
       <h2 className="text-3xl md:text-4xl font-bold mb-8 text-violet-300 text-center">Select Your Role</h2>
@@ -30,7 +32,10 @@ const RoleSelectionPage = () => {
           >
             <h3 className="text-2xl font-semibold mb-2 text-violet-400">{role.name}</h3>
             <p className="text-violet-200 mb-8 text-center">{role.description}</p>
-            <button className="mt-auto px-6 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 active:bg-violet-700 text-white font-semibold shadow transition-colors duration-200 text-base w-full">
+            <button
+              className="mt-auto px-6 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 active:bg-violet-700 text-white font-semibold shadow transition-colors duration-200 text-base w-full"
+              onClick={() => role.name === "Admin" ? navigate("/admin-signin") : null}
+            >
               Sign In
             </button>
           </div>
