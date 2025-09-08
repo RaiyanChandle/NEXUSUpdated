@@ -41,7 +41,7 @@ export const AdminSignIn = async (req, res) => {
             }
         });
         if (Admin && Admin.password === password) {
-            const token = jsonwebtoken.sign({ email: email,id:Admin.id }, "secretkey");
+            const token = jsonwebtoken.sign({ email: email,id:Admin.id },process.env.JWT_SECRET);
             return res.status(200).json({ message: "Sign in successful", token: token });
         }
         return res.status(401).json({ message: "Invalid credentials" });
