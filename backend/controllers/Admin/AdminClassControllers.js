@@ -23,6 +23,9 @@ export const getClasses = async (req, res) => {
     const classes = await prisma.class.findMany({
       where: { createdById: req.Adminid },
       orderBy: { name: "asc" },
+      include: {
+        subjects: true
+      }
     });
     return res.status(200).json({ classes });
   } catch (e) {
