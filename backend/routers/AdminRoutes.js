@@ -4,6 +4,8 @@ import { adminAuth } from "../middlewares/AdminAuthMiddleware.js";
 import { createClass, getClasses } from "../controllers/Admin/AdminClassControllers.js";
 import { createSubject, getSubjectsByClass } from "../controllers/Admin/AdminSubjectControllers.js";
 import { createTeacher, getTeachers, getTeacherById, updateTeacher } from "../controllers/Admin/AdminTeacherControllers.js";
+import upload from "../middlewares/upload.js";
+import { uploadBook, getBooks } from "../controllers/Admin/LibraryController.js";
 
 const router=express.Router();
 
@@ -18,5 +20,7 @@ router.post("/teachers", createTeacher);
 router.get("/teachers", getTeachers);
 router.get("/teachers/:teacherId", getTeacherById);
 router.put("/teachers/:teacherId", updateTeacher);
+router.post("/library/upload", upload.single('pdf'), uploadBook);
+router.get("/library/books", getBooks);
 
 export default router;
