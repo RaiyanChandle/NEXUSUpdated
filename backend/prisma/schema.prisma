@@ -19,6 +19,7 @@ model Admin {
   createdClasses  Class[]
   createdTeachers Teacher[]
   createdStudents Student[]
+  library        Library[]
 }
 
 model Teacher {
@@ -71,6 +72,15 @@ model Subject {
   // Relations
   teachers  TeacherSubjectClass[]
   students  Enrollment[]
+}
+
+model Library {
+  id         String   @id @default(cuid())
+  title      String
+  url        String
+  uploadedBy Admin    @relation(fields: [uploadedById], references: [id])
+  uploadedById String
+  createdAt  DateTime @default(now())
 }
 
 model TeacherSubjectClass {
