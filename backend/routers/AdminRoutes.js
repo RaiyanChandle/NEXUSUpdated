@@ -13,17 +13,16 @@ const router=express.Router();
 router.post("/signup",AdminSingUp);
 router.post("/signin",AdminSignIn);
 router.post("/google-oauth", adminGoogleOAuth);
-router.use(adminAuth);
-router.post("/classes", createClass);
-router.get("/classes", getClasses);
-router.post("/subjects", createSubject);
-router.get("/subjects/:classId", getSubjectsByClass);
-router.post("/teachers", createTeacher);
-router.get("/teachers", getTeachers);
-router.get("/teachers/:teacherId", getTeacherById);
-router.put("/teachers/:teacherId", updateTeacher);
-router.post("/library/upload", upload.single('pdf'), uploadBook);
-router.get("/library/books", getBooks);
+router.post("/classes",adminAuth, createClass);
+router.get("/classes", adminAuth, getClasses);
+router.post("/subjects", adminAuth, createSubject);
+router.get("/subjects/:classId", adminAuth, getSubjectsByClass);
+router.post("/teachers", adminAuth, createTeacher);
+router.get("/teachers", adminAuth, getTeachers);
+router.get("/teachers/:teacherId", adminAuth, getTeacherById);
+router.put("/teachers/:teacherId", adminAuth, updateTeacher);
+router.post("/library/upload",adminAuth, upload.single('pdf'),  uploadBook);
+router.get("/library/books", adminAuth, getBooks);
 
 
 

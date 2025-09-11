@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const AdminLibrary = () => {
+
+  const API_URL=import.meta.env.VITE_API_URL;
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
   const [books, setBooks] = useState([]);
@@ -18,7 +20,7 @@ const AdminLibrary = () => {
     setError("");
     try {
       const token = localStorage.getItem("nexus_admin_jwt");
-      const res = await axios.get("http://localhost:3000/api/v1/admin/library/books", {
+      const res = await axios.get(`${API_URL}/admin/library/books`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setBooks(res.data.books || []);
@@ -39,7 +41,7 @@ const AdminLibrary = () => {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("pdf", file);
-      await axios.post("http://localhost:3000/api/v1/admin/library/upload", formData, {
+      await axios.post(`${API_URL}/admin/library/upload`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
