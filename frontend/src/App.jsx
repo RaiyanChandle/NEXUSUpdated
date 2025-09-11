@@ -12,14 +12,24 @@ import AdminStudents from './pages/admin/Students';
 import AdminAnnouncements from './pages/admin/Announcements';
 import AdminLibrary from './pages/admin/Library';
 import AdminProfile from './pages/admin/Profile';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
 
 function App() {
+  const AdminGoogleOAuthWrapper=()=>{
+    return (
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <AdminAuthPage></AdminAuthPage>
+    </GoogleOAuthProvider>)
+  };
+
+  
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/role-selection" element={<RoleSelectionPage />} />
-        <Route path="/admin-signin" element={<AdminAuthPage />} />
+        <Route path="/admin-signin" element={<AdminGoogleOAuthWrapper/>} />
         <Route path="/admin" element={<AdminHomeScreen />}>
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="classes" element={<AdminClasses />} />

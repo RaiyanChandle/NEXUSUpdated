@@ -79,6 +79,7 @@ function LogoIcon() {
 }
 
 const AdminHomeScreen = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
