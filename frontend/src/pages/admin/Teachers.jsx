@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const AdminTeachers = () => {
+const AdminTeachers = () => { 
+  const API_URL=import.meta.env.VITE_API_URL;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +37,7 @@ const AdminTeachers = () => {
     setError("");
     try {
       const token = localStorage.getItem("nexus_admin_jwt");
-      const res = await axios.get("http://localhost:3000/api/v1/admin/classes", {
+      const res = await axios.get(`${API_URL}/admin/classes`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setClasses(res.data.classes || []);
@@ -58,7 +59,7 @@ const AdminTeachers = () => {
     setError("");
     try {
       const token = localStorage.getItem("nexus_admin_jwt");
-      const res = await axios.get("http://localhost:3000/api/v1/admin/teachers", {
+      const res = await axios.get(`${API_URL}/admin/teachers`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTeachers(res.data.teachers || []);
@@ -77,7 +78,7 @@ const AdminTeachers = () => {
     try {
       const token = localStorage.getItem("nexus_admin_jwt");
       await axios.post(
-        "http://localhost:3000/api/v1/admin/teachers",
+        `${API_URL}/admin/teachers`,
         { name, email, password, subjectIds },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -111,7 +112,7 @@ const AdminTeachers = () => {
     try {
       const token = localStorage.getItem("nexus_admin_jwt");
       await axios.put(
-        `http://localhost:3000/api/v1/admin/teachers/${modalTeacher.id}`,
+        `${API_URL}/admin/teachers/${modalTeacher.id}`,
         { ...editFields },
         { headers: { Authorization: `Bearer ${token}` } }
       );

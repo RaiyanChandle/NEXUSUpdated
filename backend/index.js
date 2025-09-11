@@ -3,11 +3,18 @@ import express from "express";
 import cors from "cors";  
 import {PrismaClient} from "@prisma/client";
 import AdminRouter from "./routers/AdminRoutes.js"
+import dotenv from "dotenv";
+dotenv.config();
 
 
 const app = express();
+const frontend_url=process.env.VITE_FRONTEND_URL;
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: [frontend_url],
+    methods: ["POST", "GET"],
+    credentials: true
+}));
 const client=new PrismaClient();
 
 app.use("/api/v1/admin", AdminRouter);

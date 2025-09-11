@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const AdminSubjects = () => {
+  const API_URL=import.meta.env.VITE_API_URL;
   const [subjectName, setSubjectName] = useState("");
   const [selectedClass, setSelectedClass] = useState("");
   const [classes, setClasses] = useState([]);
@@ -21,7 +22,7 @@ const AdminSubjects = () => {
     setError("");
     try {
       const token = localStorage.getItem("nexus_admin_jwt");
-      const res = await axios.get("http://localhost:3000/api/v1/admin/classes", {
+      const res = await axios.get(` ${API_URL}/admin/classes`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setClasses(res.data.classes || []);
@@ -40,7 +41,7 @@ const AdminSubjects = () => {
     try {
       const token = localStorage.getItem("nexus_admin_jwt");
       await axios.post(
-        "http://localhost:3000/api/v1/admin/subjects",
+            `${API_URL}/admin/subjects`,
         { name: subjectName, classId: selectedClass },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -66,7 +67,7 @@ const AdminSubjects = () => {
     setError("");
     try {
       const token = localStorage.getItem("nexus_admin_jwt");
-      const res = await axios.get(`http://localhost:3000/api/v1/admin/subjects/${classId}`,
+      const res = await axios.get(`${API_URL}/admin/subjects/${classId}`,
         { headers: { Authorization: `Bearer ${token}` } });
       setSubjects(res.data.subjects || []);
     } catch (err) {
