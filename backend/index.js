@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 });
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
-app.use("/api/v1/admin", AdminRouter);
+app.use("/admin", AdminRouter);
 
 
 
