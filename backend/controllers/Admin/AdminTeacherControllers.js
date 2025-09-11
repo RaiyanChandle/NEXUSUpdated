@@ -9,9 +9,12 @@ export const createTeacher = async (req, res) => {
     if (!name || !email || !password || !Array.isArray(subjectIds) || subjectIds.length === 0) {
       return res.status(400).json({ message: "All fields and at least one subject are required" });
     }
+    // Hash teacher password
+    const bcrypt = (await import('bcrypt')).default;
+    const hashedPassword = await bcrypt.hash(password, 10);
     // Create teacher
     const teacher = await prisma.teacher.create({
-      data: { name, email, password, createdById: req.Adminid },
+      data: { name, email, password: hashedPassword, createdById: req.Adminid },
     });
     // Assign subjects (for each subject, find its class)
     for (const subjectId of subjectIds) {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const AdminClasses = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [className, setClassName] = useState("");
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -12,7 +13,7 @@ const AdminClasses = () => {
     setError("");
     try {
       const token = localStorage.getItem("nexus_admin_jwt");
-      const res = await axios.get("http://localhost:3000/api/v1/admin/classes", {
+      const res = await axios.get(`${API_URL}/admin/classes`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setClasses(res.data.classes || []);
@@ -35,7 +36,7 @@ const AdminClasses = () => {
     try {
       const token = localStorage.getItem("nexus_admin_jwt");
       await axios.post(
-        "http://localhost:3000/api/v1/admin/classes",
+        `${API_URL}/admin/classes`,
         { name: className },
         { headers: { Authorization: `Bearer ${token}` } }
       );
