@@ -17,6 +17,9 @@ app.use(cors({
 }));
 const client=new PrismaClient();
 
+app.get("/", (req, res) => {
+    res.send("Hello World!");
+});
 app.use("/api/v1/admin", AdminRouter);
 
 
