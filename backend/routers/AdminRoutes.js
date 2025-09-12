@@ -5,6 +5,7 @@ import { createClass, getClasses } from "../controllers/Admin/AdminClassControll
 import { createSubject, getSubjectsByClass } from "../controllers/Admin/AdminSubjectControllers.js";
 import { createTeacher, getTeachers, getTeacherById, updateTeacher } from "../controllers/Admin/AdminTeacherControllers.js";
 import { createStudent, getStudents } from "../controllers/Admin/AdminStudentControllers.js";
+import { getDashboardCounts } from "../controllers/Admin/AdminDashboardController.js";
 import upload from "../middlewares/upload.js";
 import { uploadBook, getBooks } from "../controllers/Admin/LibraryController.js";
 import { adminGoogleOAuth } from "../controllers/Admin/AdminGoogleOAuthController.js";
@@ -26,5 +27,6 @@ router.post("/library/upload",adminAuth, upload.single('pdf'),  uploadBook);
 router.get("/library/books", adminAuth, getBooks);
 router.post("/students", adminAuth, createStudent);
 router.get("/students", adminAuth, getStudents);
+router.get("/dashboard-counts", adminAuth, getDashboardCounts);
 
 export default router;
