@@ -4,6 +4,7 @@ import { adminAuth } from "../middlewares/AdminAuthMiddleware.js";
 import { createClass, getClasses } from "../controllers/Admin/AdminClassControllers.js";
 import { createSubject, getSubjectsByClass } from "../controllers/Admin/AdminSubjectControllers.js";
 import { createTeacher, getTeachers, getTeacherById, updateTeacher } from "../controllers/Admin/AdminTeacherControllers.js";
+import { createStudent, getStudents } from "../controllers/Admin/AdminStudentControllers.js";
 import upload from "../middlewares/upload.js";
 import { uploadBook, getBooks } from "../controllers/Admin/LibraryController.js";
 import { adminGoogleOAuth } from "../controllers/Admin/AdminGoogleOAuthController.js";
@@ -23,7 +24,7 @@ router.get("/teachers/:teacherId", adminAuth, getTeacherById);
 router.put("/teachers/:teacherId", adminAuth, updateTeacher);
 router.post("/library/upload",adminAuth, upload.single('pdf'),  uploadBook);
 router.get("/library/books", adminAuth, getBooks);
-
-
+router.post("/students", adminAuth, createStudent);
+router.get("/students", adminAuth, getStudents);
 
 export default router;
