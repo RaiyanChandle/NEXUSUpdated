@@ -22,7 +22,7 @@ app.get('/favicon.ico', (req, res) => res.status(204).end());
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
-app.use("/api/v1/admin", AdminRouter);
+app.use("/admin", AdminRouter);
 
 
 
