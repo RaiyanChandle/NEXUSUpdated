@@ -20,6 +20,7 @@ model Admin {
   createdTeachers Teacher[]
   createdStudents Student[]
   library        Library[]
+  announcements  Announcement[]
 }
 
 model Teacher {
@@ -72,6 +73,24 @@ model Subject {
   // Relations
   teachers  TeacherSubjectClass[]
   students  Enrollment[]
+}
+
+enum AnnouncementType {
+  GLOBAL
+  CLASS
+  TEACHER
+}
+
+model Announcement {
+  id         String   @id @default(cuid())
+  title      String
+  message    String
+  type       AnnouncementType
+  classId    String?
+  teacherId  String?
+  createdBy  Admin    @relation(fields: [createdById], references: [id])
+  createdById String
+  createdAt  DateTime @default(now())
 }
 
 model Library {
