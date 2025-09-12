@@ -10,21 +10,7 @@ export const adminGoogleOAuth = async (req, res) => {
     if (!code) return res.status(400).json({ message: 'Missing Google OAuth code' });
 
     // Exchange code for tokens
-    // Step 1: when generating auth URL
-const url = googleClient.generateAuthUrl({
-  access_type: 'offline',
-  scope: ['email', 'profile'],
-  redirect_uri: "https://nexus-erp-frontend-delta.vercel.app/admin-signin",
-});
-console.log("Generated auth URL with redirect_uri:", "https://nexus-erp-frontend-delta.vercel.app/admin-signin");
-
-// Step 2: when exchanging code
-const { tokens } = await googleClient.getToken({
-  code,
-  redirect_uri: "https://nexus-erp-frontend-delta.vercel.app/admin-signin",
-});
-console.log("Exchanging code with redirect_uri:", "https://nexus-erp-frontend-delta.vercel.app/admin-signin");
-
+    const { tokens } = await googleClient.getToken(code);
     googleClient.setCredentials(tokens);
 
     // Get Google user info
