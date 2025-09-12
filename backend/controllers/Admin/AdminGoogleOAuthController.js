@@ -10,7 +10,10 @@ export const adminGoogleOAuth = async (req, res) => {
     if (!code) return res.status(400).json({ message: 'Missing Google OAuth code' });
 
     // Exchange code for tokens
-    const { tokens } = await googleClient.getToken(code);
+    const { tokens } = await googleClient.getToken({
+  code,
+  redirect_uri: "https://nexus-erp-frontend-delta.vercel.app/admin-signin",
+});
     googleClient.setCredentials(tokens);
 
     // Get Google user info
