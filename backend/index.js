@@ -10,6 +10,8 @@ dotenv.config();
 const app = express();
 const frontend_url = process.env.VITE_FRONTEND_URL;
 
+console.log(frontend_url);
+
 app.use(express.json());
 app.use(cors({
     origin: [frontend_url],
