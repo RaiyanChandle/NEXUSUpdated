@@ -9,12 +9,15 @@ import { getDashboardCounts } from "../controllers/Admin/AdminDashboardControlle
 import upload from "../middlewares/upload.js";
 import { uploadBook, getBooks } from "../controllers/Admin/LibraryController.js";
 import { adminGoogleOAuth } from "../controllers/Admin/AdminGoogleOAuthController.js";
+import { createAnnouncement, getAnnouncements } from "../controllers/Admin/AnnouncementController.js";
 
 const router=express.Router();
 
 router.post("/signup",AdminSingUp);
 router.post("/signin",AdminSignIn);
 router.post("/google-oauth", adminGoogleOAuth);
+router.post("/announcements", adminAuth, createAnnouncement);
+router.get("/announcements", adminAuth, getAnnouncements);
 router.post("/classes",adminAuth, createClass);
 router.get("/classes", adminAuth, getClasses);
 router.post("/subjects", adminAuth, createSubject);
