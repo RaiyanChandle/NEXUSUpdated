@@ -29,6 +29,7 @@ export const createAnnouncement = async (req, res) => {
 export const getAnnouncements = async (req, res) => {
   try {
     const announcements = await prisma.announcement.findMany({
+      where: { createdById: req.Adminid },
       orderBy: { createdAt: 'desc' },
       include: { createdBy: { select: { email: true, id: true } } },
     });

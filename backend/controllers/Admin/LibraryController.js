@@ -43,6 +43,7 @@ export const uploadBook = async (req, res) => {
 export const getBooks = async (req, res) => {
   try {
     const books = await prisma.library.findMany({
+      where: { uploadedById: req.Adminid },
       orderBy: { createdAt: 'desc' },
       include: { uploadedBy: { select: { email: true, id: true } } }
     });

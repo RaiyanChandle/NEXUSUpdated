@@ -55,7 +55,7 @@ const links = [
   },
   {
     label: "Logout",
-    href: "#logout",
+    href: "/admin-signin",
     icon: <IconArrowLeft className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
   }
 ];
@@ -79,16 +79,19 @@ function LogoIcon() {
 }
 
 const AdminHomeScreen = () => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("nexus_admin_jwt");
+    navigate("/admin-signin");
+  };
   const API_URL = import.meta.env.VITE_API_URL;
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
   const location = useLocation();
 
-  // Logout handler
+  // Sidebar click handler
   const handleSidebarClick = (href) => {
-    if (href === "/admin/logout") {
-      localStorage.removeItem("nexus_admin_jwt");
-      navigate("/admin-signin");
+    if (href === "/admin-signin") {
+      handleLogout();
       return;
     }
     navigate(href);
