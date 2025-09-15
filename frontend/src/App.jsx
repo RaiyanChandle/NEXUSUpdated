@@ -11,9 +11,11 @@ import AdminTeachers from './pages/admin/Teachers';
 import AdminStudents from './pages/admin/Students';
 import AdminAnnouncements from './pages/admin/Announcements';
 import AdminLibrary from './pages/admin/Library';
-import AdminProfile from './pages/admin/Profile';
+import AdminProfile from "./pages/admin/Profile";
 import { GoogleOAuthProvider } from '@react-oauth/google';
-
+import TeacherSignIn from "./pages/teacher/TeacherSignIn";
+import TeacherHomeScreen from "./pages/teacher/TeacherHomeScreen";
+import TeacherDashboard from "./pages/teacher/Dashboard";
 
 function App() {
   const AdminGoogleOAuthWrapper=()=>{
@@ -30,6 +32,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/role-selection" element={<RoleSelectionPage />} />
         <Route path="/admin-signin" element={<AdminGoogleOAuthWrapper/>} />
+        <Route path="/teacher-signin" element={<TeacherSignIn />} />
         <Route path="/admin" element={<AdminHomeScreen />}>
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="classes" element={<AdminClasses />} />
@@ -40,6 +43,11 @@ function App() {
           <Route path="library" element={<AdminLibrary />} />
           <Route path="profile" element={<AdminProfile />} />
           <Route index element={<AdminDashboard />} />
+        </Route>
+        <Route path="/teacher/*" element={<TeacherHomeScreen />}>
+          <Route path="dashboard" element={<TeacherDashboard />} />
+          {/* Add more teacher routes here */}
+          <Route index element={<TeacherDashboard />} />
         </Route>
       </Routes>
     </Router>

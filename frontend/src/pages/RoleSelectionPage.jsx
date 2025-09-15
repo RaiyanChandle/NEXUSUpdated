@@ -34,7 +34,10 @@ const RoleSelectionPage = () => {
             <p className="text-violet-200 mb-8 text-center">{role.description}</p>
             <button
               className="mt-auto px-6 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 active:bg-violet-700 text-white font-semibold shadow transition-colors duration-200 text-base w-full"
-              onClick={() => role.name === "Admin" ? navigate("/admin-signin") : null}
+              onClick={() => {
+                if (role.name === "Admin") navigate("/admin-signin");
+                else if (role.name === "Teacher") navigate("/teacher-signin");
+              }}
             >
               Sign In
             </button>
