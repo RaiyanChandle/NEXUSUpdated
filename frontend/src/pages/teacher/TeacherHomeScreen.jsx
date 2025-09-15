@@ -12,13 +12,33 @@ const links = [
     icon: <IconChalkboard className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
   },
   {
-    label: "My Subjects",
+    label: "Subjects",
     href: "/teacher/subjects",
     icon: <IconChalkboard className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
   },
   {
-    label: "My Classes",
-    href: "/teacher/classes",
+    label: "Students",
+    href: "/teacher/students",
+    icon: <IconUserBolt className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
+  },
+  {
+    label: "Attendance",
+    href: "/teacher/attendance",
+    icon: <IconChalkboard className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
+  },
+  {
+    label: "Assignment",
+    href: "/teacher/assignment",
+    icon: <IconChalkboard className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
+  },
+  {
+    label: "Notes",
+    href: "/teacher/notes",
+    icon: <IconChalkboard className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
+  },
+  {
+    label: "Meeting",
+    href: "/teacher/meeting",
     icon: <IconChalkboard className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
   },
   {

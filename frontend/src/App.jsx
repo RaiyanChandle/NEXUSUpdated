@@ -16,6 +16,14 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import TeacherSignIn from "./pages/teacher/TeacherSignIn";
 import TeacherHomeScreen from "./pages/teacher/TeacherHomeScreen";
 import TeacherDashboard from "./pages/teacher/Dashboard";
+import TeacherSubjects from "./pages/teacher/TeacherSubjects";
+import TeacherStudents from "./pages/teacher/TeacherStudents";
+import TeacherAttendance from "./pages/teacher/TeacherAttendance";
+import TeacherAssignment from "./pages/teacher/TeacherAssignment";
+import TeacherMeeting from "./pages/teacher/TeacherMeeting";
+import TeacherNotes from "./pages/teacher/TeacherNotes";
+import TeacherAnnouncements from "./pages/teacher/TeacherAnnouncements";
+import TeacherProfile from "./pages/teacher/TeacherProfile";
 
 function App() {
   const AdminGoogleOAuthWrapper=()=>{
@@ -44,9 +52,16 @@ function App() {
           <Route path="profile" element={<AdminProfile />} />
           <Route index element={<AdminDashboard />} />
         </Route>
-        <Route path="/teacher/*" element={<TeacherHomeScreen />}>
+        <Route path="/teacher" element={<TeacherHomeScreen />}>
           <Route path="dashboard" element={<TeacherDashboard />} />
-          {/* Add more teacher routes here */}
+          <Route path="subjects" element={<TeacherSubjects />} />
+          <Route path="students" element={<TeacherStudents />} />
+          <Route path="attendance" element={<TeacherAttendance />} />
+          <Route path="assignment" element={<TeacherAssignment />} />
+          <Route path="notes" element={<TeacherNotes />} />
+          <Route path="meeting" element={<TeacherMeeting />} />
+          <Route path="announcements" element={<TeacherAnnouncements />} />
+          <Route path="profile" element={<TeacherProfile />} />
           <Route index element={<TeacherDashboard />} />
         </Route>
       </Routes>
