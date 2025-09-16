@@ -24,6 +24,15 @@ import TeacherMeeting from "./pages/teacher/TeacherMeeting";
 import TeacherNotes from "./pages/teacher/TeacherNotes";
 import TeacherAnnouncements from "./pages/teacher/TeacherAnnouncements";
 import TeacherProfile from "./pages/teacher/TeacherProfile";
+import StudentHomeScreen from "./pages/student/StudentHomeScreen";
+import StudentDashboard from "./pages/student/StudentDashboard";
+import StudentSignIn from "./pages/student/StudentSignIn";
+import StudentAttendance from "./pages/student/StudentAttendance";
+import StudentSubjects from "./pages/student/StudentSubjects";
+import StudentAssignments from "./pages/student/StudentAssignments";
+import StudentLibrary from "./pages/student/StudentLibrary";
+import StudentProfile from "./pages/student/StudentProfile";
+import StudentAnnouncements from "./pages/student/StudentAnnouncements";
 
 function App() {
   const AdminGoogleOAuthWrapper=()=>{
@@ -41,6 +50,7 @@ function App() {
         <Route path="/role-selection" element={<RoleSelectionPage />} />
         <Route path="/admin-signin" element={<AdminGoogleOAuthWrapper/>} />
         <Route path="/teacher-signin" element={<TeacherSignIn />} />
+        <Route path="/student-signin" element={<StudentSignIn />} />
         <Route path="/admin" element={<AdminHomeScreen />}>
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="classes" element={<AdminClasses />} />
@@ -63,6 +73,16 @@ function App() {
           <Route path="announcements" element={<TeacherAnnouncements />} />
           <Route path="profile" element={<TeacherProfile />} />
           <Route index element={<TeacherDashboard />} />
+        </Route>
+        <Route path="/student" element={<StudentHomeScreen />}>
+          <Route path="dashboard" element={<StudentDashboard />} />
+          <Route path="subjects" element={<StudentSubjects />} />
+          <Route path="attendance" element={<StudentAttendance />} />
+          <Route path="assignments" element={<StudentAssignments />} />
+          <Route path="library" element={<StudentLibrary />} />
+          <Route path="announcements" element={<StudentAnnouncements />} />
+          <Route path="profile" element={<StudentProfile />} />
+          <Route index element={<StudentDashboard />} />
         </Route>
       </Routes>
     </Router>
