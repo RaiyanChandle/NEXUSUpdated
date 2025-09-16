@@ -37,6 +37,7 @@ const RoleSelectionPage = () => {
               onClick={() => {
                 if (role.name === "Admin") navigate("/admin-signin");
                 else if (role.name === "Teacher") navigate("/teacher-signin");
+                else if (role.name === "Student") navigate("/student-signin");
               }}
             >
               Sign In

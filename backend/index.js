@@ -4,6 +4,7 @@ import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import AdminRouter from "./routers/AdminRoutes.js";
 import TeacherRouter from "./routers/TeacherRoutes.js";
+import StudentRouter from "./routers/StudentRoutes.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -30,5 +31,6 @@ app.get("/", (req, res) => {
 
 app.use("/admin", AdminRouter);
 app.use("/teacher", TeacherRouter);
+app.use("/student", StudentRouter);
 
 app.listen(3000, () => console.log("Server started on port 3000"));
