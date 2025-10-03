@@ -1,12 +1,28 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import LightRays from '../components/ui/LightRays';
 
 const LandingPage = () => {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-violet-950 via-violet-900 to-violet-800 text-white font-poppins">
-      <div className="text-center px-6">
-        <h1 className="text-5xl md:text-7xl font-bold mb-4 tracking-tight text-violet-400 drop-shadow-lg">NEXUS</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-black px-4">
+      <div className="absolute inset-0 z-0">
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#00ffff"
+          raysSpeed={1.5}
+          lightSpread={0.8}
+          rayLength={1.2}
+          followMouse={true}
+          mouseInfluence={0.1}
+          noiseAmount={0.1}
+          distortion={0.05}
+          className="custom-rays"
+        />
+        <div className="absolute inset-0 bg-black/80" />
+      </div>
+      <div className="flex flex-col items-center justify-center flex-1 w-full max-w-2xl mx-auto text-center relative z-10">
+        <h1 className="text-4xl md:text-6xl font-extrabold text-violet-300 mb-6 drop-shadow-lg">NEXUS</h1>
         <p className="text-lg md:text-2xl mb-8 text-violet-200 max-w-xl mx-auto">
           The modern school management system for seamless administration, collaboration, and growth. Secure, efficient, and beautifully simple.
         </p>

@@ -15,7 +15,7 @@ export const createStudent = async (req, res) => {
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const student = await prisma.student.create({
-      data: { name, email, password: hashedPassword },
+      data: { name, email, password: hashedPassword, createdById: req.Adminid },
     });
     // create Enrollments for each subject if classId and subjectIds are provided
     let enrollments = [];
