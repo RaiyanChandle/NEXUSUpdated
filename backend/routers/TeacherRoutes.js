@@ -4,6 +4,8 @@ import { teacherGoogleOAuth } from "../controllers/Teacher/TeacherGoogleOAuthCon
 import { getTeacherCoursesAndClasses, getStudentsForCourseClass } from "../controllers/Teacher/TeacherStudentsController.js";
 import { getTeacherSubjects } from "../controllers/Teacher/TeacherSubjectsController.js";
 import { teacherAuth } from "../middlewares/TeacherAuthMiddleware.js";
+import upload from "../middlewares/upload.js";
+import { uploadNote, getTeacherNotes } from "../controllers/Teacher/TeacherNotesController.js";
 const router = express.Router();
 
 router.post("/signin", teacherSignIn);
@@ -23,5 +25,13 @@ router.post("/attendance-session", teacherAuth, createAttendanceSession);
 router.get("/attendance-sessions", teacherAuth, getSessionsForCourse);
 router.get("/attendance-records", teacherAuth, getAttendanceForSession);
 router.post("/attendance-records", teacherAuth, markAttendance);
+
+router.post("/notes/upload", teacherAuth, upload.single('pdf'), uploadNote);
+router.get("/notes", teacherAuth, getTeacherNotes);
+import { getTeacherAnnouncements } from "../controllers/Teacher/TeacherAnnouncementsController.js";
+import { getTeacherProfile, updateTeacherProfile } from "../controllers/Teacher/TeacherProfileController.js";
+router.get("/announcements", teacherAuth, getTeacherAnnouncements);
+router.get("/profile", teacherAuth, getTeacherProfile);
+router.post("/profile", teacherAuth, updateTeacherProfile);
 
 export default router;

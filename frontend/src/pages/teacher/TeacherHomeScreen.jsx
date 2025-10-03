@@ -53,7 +53,7 @@ const links = [
   },
   {
     label: "Logout",
-    href: "/teacher/logout",
+    href: "/teacher-signin",
     icon: <IconArrowLeft className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
   }
 ];
@@ -86,7 +86,7 @@ const TeacherHomeScreen = () => {
     navigate("/teacher-signin");
   };
   const handleSidebarClick = (href) => {
-    if (href === "/teacher/logout") {
+    if (href === "/teacher-signin") {
       handleLogout();
       return;
     }
