@@ -35,6 +35,7 @@ model Teacher {
   // Relations
   subjectsTaught TeacherSubjectClass[]
   attendanceSessions AttendanceSession[]
+  notes Note[]
 }
 
 model Student {
@@ -77,6 +78,7 @@ model Subject {
   teachers  TeacherSubjectClass[]
   students  Enrollment[]
   attendanceSessions AttendanceSession[]
+  notes Note[]
 }
 
 enum AnnouncementType {
@@ -160,3 +162,15 @@ model AttendanceRecord {
   @@unique([sessionId, studentId])
 }
 
+model Note {
+  id        String   @id @default(cuid())
+  teacherId String
+  subjectId String
+  topic     String
+  pdfUrl    String
+  createdAt DateTime @default(now())
+
+  teacher   Teacher  @relation(fields: [teacherId], references: [id])
+  subject   Subject  @relation(fields: [subjectId], references: [id])
+}
+ 
