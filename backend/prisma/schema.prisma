@@ -34,6 +34,7 @@ model Teacher {
 
   // Relations
   subjectsTaught TeacherSubjectClass[]
+  attendanceSessions AttendanceSession[]
 }
 
 model Student {
@@ -47,6 +48,7 @@ model Student {
 
   // Relations
   enrollments Enrollment[]
+  attendanceRecords AttendanceRecord[]
 }
 
 model Class {
@@ -60,7 +62,8 @@ model Class {
   // Relations
   subjects           Subject[]
   students           Enrollment[]
-  teacherAssignments TeacherSubjectClass[] 
+  teacherAssignments TeacherSubjectClass[]
+  attendanceSessions AttendanceSession[]
 }
 
 
@@ -73,6 +76,7 @@ model Subject {
   // Relations
   teachers  TeacherSubjectClass[]
   students  Enrollment[]
+  attendanceSessions AttendanceSession[]
 }
 
 enum AnnouncementType {
@@ -126,5 +130,33 @@ model Enrollment {
   class      Class    @relation(fields: [classId], references: [id])
 
   @@unique([studentId, subjectId, classId])
+}
+
+model AttendanceSession {
+  id         String   @id @default(cuid())
+  subjectId  String
+  classId    String
+  teacherId  String
+  date       DateTime
+  startTime  String
+  endTime    String
+  topic      String
+
+  subject    Subject  @relation(fields: [subjectId], references: [id])
+  class      Class    @relation(fields: [classId], references: [id])
+  teacher    Teacher  @relation(fields: [teacherId], references: [id])
+  records    AttendanceRecord[]
+}
+
+model AttendanceRecord {
+  id         String   @id @default(cuid())
+  sessionId  String
+  studentId  String
+  present    Boolean
+
+  session    AttendanceSession @relation(fields: [sessionId], references: [id])
+  student    Student           @relation(fields: [studentId], references: [id])
+
+  @@unique([sessionId, studentId])
 }
 
