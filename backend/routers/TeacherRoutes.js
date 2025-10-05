@@ -6,6 +6,7 @@ import { getTeacherSubjects } from "../controllers/Teacher/TeacherSubjectsContro
 import { teacherAuth } from "../middlewares/TeacherAuthMiddleware.js";
 import upload from "../middlewares/upload.js";
 import { uploadNote, getTeacherNotes } from "../controllers/Teacher/TeacherNotesController.js";
+import { createAssignment, listAssignments, acceptSubmission } from "../controllers/Teacher/TeacherAssignmentController.js";
 const router = express.Router();
 
 router.post("/signin", teacherSignIn);
@@ -33,5 +34,9 @@ import { getTeacherProfile, updateTeacherProfile } from "../controllers/Teacher/
 router.get("/announcements", teacherAuth, getTeacherAnnouncements);
 router.get("/profile", teacherAuth, getTeacherProfile);
 router.post("/profile", teacherAuth, updateTeacherProfile);
+
+router.post("/assignments/upload", teacherAuth, upload.single('pdf'), createAssignment);
+router.get("/assignments", teacherAuth, listAssignments);
+router.post("/assignments/accept", teacherAuth, acceptSubmission);
 
 export default router;

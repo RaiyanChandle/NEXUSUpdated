@@ -19,7 +19,6 @@ import TeacherDashboard from "./pages/teacher/Dashboard";
 import TeacherSubjects from "./pages/teacher/TeacherSubjects";
 import TeacherStudents from "./pages/teacher/TeacherStudents";
 import TeacherAttendance from "./pages/teacher/TeacherAttendance";
-import TeacherAssignment from "./pages/teacher/TeacherAssignment";
 import TeacherMeeting from "./pages/teacher/TeacherMeeting";
 import TeacherNotes from "./pages/teacher/TeacherNotes";
 import TeacherAnnouncements from "./pages/teacher/TeacherAnnouncements";
@@ -33,6 +32,7 @@ import StudentAssignments from "./pages/student/StudentAssignments";
 import StudentLibrary from "./pages/student/StudentLibrary";
 import StudentProfile from "./pages/student/StudentProfile";
 import StudentAnnouncements from "./pages/student/StudentAnnouncements";
+import TeacherAssignments from './pages/teacher/TeacherAssignments';
 
 function App() {
   const AdminGoogleOAuthWrapper=()=>{
@@ -67,7 +67,7 @@ function App() {
           <Route path="subjects" element={<TeacherSubjects />} />
           <Route path="students" element={<TeacherStudents />} />
           <Route path="attendance" element={<TeacherAttendance />} />
-          <Route path="assignment" element={<TeacherAssignment />} />
+          <Route path="assignment" element={<TeacherAssignments />} />
           <Route path="notes" element={<TeacherNotes />} />
           <Route path="meeting" element={<TeacherMeeting />} />
           <Route path="announcements" element={<TeacherAnnouncements />} />

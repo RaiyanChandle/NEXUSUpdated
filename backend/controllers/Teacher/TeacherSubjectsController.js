@@ -20,9 +20,10 @@ export const getTeacherSubjects = async (req, res) => {
           where: { subjectId: tsc.subjectId, classId: tsc.classId },
         });
         return {
-          id: tsc.id,
-          subject: tsc.subject,
-          class: tsc.class,
+          subjectId: tsc.subject.id,
+          subjectName: tsc.subject.name,
+          classId: tsc.class.id,
+          className: tsc.class.name,
           studentCount,
         };
       })

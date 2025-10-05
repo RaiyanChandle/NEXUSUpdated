@@ -9,6 +9,7 @@ import { getStudentAttendanceForSubject, getStudentAttendanceAverage } from "../
 import { getStudentAnnouncements } from "../controllers/Student/StudentAnnouncementsController.js";
 import { getBooksForStudent } from "../controllers/Student/StudentLibraryController.js";
 import { getStudentProfile, updateStudentPassword } from "../controllers/Student/StudentProfileController.js";
+import { listStudentAssignments, submitAssignment, deleteSubmission } from "../controllers/Student/StudentAssignmentController.js";
 const router = express.Router();
 
 router.post("/signin", studentSignIn);
@@ -27,5 +28,10 @@ router.get("/library/books", getBooksForStudent);
 
 router.get("/profile", studentAuth, getStudentProfile);
 router.post("/profile/password", studentAuth, updateStudentPassword);
+
+router.get("/assignments", studentAuth, listStudentAssignments);
+router.post("/assignments/delete", studentAuth, deleteSubmission);
+import upload from "../middlewares/upload.js";
+router.post("/assignments/submit", studentAuth, upload.single('pdf'), submitAssignment);
 
 export default router;
