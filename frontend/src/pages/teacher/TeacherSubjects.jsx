@@ -50,12 +50,12 @@ const TeacherSubjects = () => {
           <tbody>
             {subjects.map((item) => (
               <tr
-                key={item.id}
+                key={item.id || `${item.subjectId || ''}_${item.classId || ''}` || index}
                 className="cursor-pointer hover:bg-violet-700 transition"
                 onClick={() => handleRowClick(item.id)}
               >
-                <td className="px-4 py-3">{item.subject.name}</td>
-                <td className="px-4 py-3">{item.class.name}</td>
+                <td className="px-4 py-3">{item.subject?.name || item.subjectName || '-'}</td>
+                <td className="px-4 py-3">{item.class?.name || item.className || '-'}</td>
                 <td className="px-4 py-3">{item.studentCount}</td>
               </tr>
             ))}

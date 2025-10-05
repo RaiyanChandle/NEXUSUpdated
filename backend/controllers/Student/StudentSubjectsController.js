@@ -12,6 +12,7 @@ export const getStudentSubjects = async (req, res) => {
       include: {
         subject: {
           include: {
+            class: true,
             teachers: {
               include: {
                 teacher: true
@@ -29,6 +30,8 @@ export const getStudentSubjects = async (req, res) => {
       return {
         subjectId: subject.id,
         subjectName: subject.name,
+        classId: subject.classId,
+        className: subject.class?.name || null,
         teacher: teacher ? { id: teacher.id, name: teacher.name, email: teacher.email } : null
       };
     });

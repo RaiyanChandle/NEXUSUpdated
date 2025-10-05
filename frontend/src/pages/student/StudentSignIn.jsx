@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useGoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import LightRays from "../../components/ui/LightRays.jsx"
 
 const StudentSignIn = () => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -64,8 +65,23 @@ const StudentSignIn = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-violet-950 via-violet-900 to-violet-800 text-white font-poppins px-4">
-      <div className="bg-violet-900/80 border border-violet-700 rounded-2xl shadow-xl p-8 w-full max-w-md flex flex-col items-center">
+    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-black px-4">
+      <div className="absolute inset-0 z-0">
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#00ffff"
+          raysSpeed={1.5}
+          lightSpread={0.8}
+          rayLength={1.2}
+          followMouse={true}
+          mouseInfluence={0.1}
+          noiseAmount={0.1}
+          distortion={0.05}
+          className="custom-rays"
+        />
+        <div className="absolute inset-0 bg-black/80" />
+      </div>
+      <div className="bg-violet-900/80 border border-violet-700 rounded-2xl shadow-xl p-8 w-full max-w-md flex flex-col items-center relative z-10">
         <h2 className="text-2xl font-bold mb-6 text-violet-300 text-center">Student Sign In</h2>
         <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
           <input

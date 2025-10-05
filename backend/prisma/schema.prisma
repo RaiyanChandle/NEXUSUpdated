@@ -36,6 +36,7 @@ model Teacher {
   subjectsTaught TeacherSubjectClass[]
   attendanceSessions AttendanceSession[]
   notes Note[]
+  assignments Assignment[]
 }
 
 model Student {
@@ -43,6 +44,7 @@ model Student {
   name      String
   email     String   @unique
   password  String
+  rollno    Int
 
   createdById String?
   createdBy   Admin?   @relation(fields: [createdById], references: [id])
@@ -50,6 +52,7 @@ model Student {
   // Relations
   enrollments Enrollment[]
   attendanceRecords AttendanceRecord[]
+  submissions Submission[]
 }
 
 model Class {
@@ -79,6 +82,7 @@ model Subject {
   students  Enrollment[]
   attendanceSessions AttendanceSession[]
   notes Note[]
+  assignments Assignment[]
 }
 
 enum AnnouncementType {
@@ -173,4 +177,43 @@ model Note {
   teacher   Teacher  @relation(fields: [teacherId], references: [id])
   subject   Subject  @relation(fields: [subjectId], references: [id])
 }
+
+enum SubmissionStatus {
+  UPLOAD
+  SUBMITTED
+  ACCEPTED
+}
+
+model Assignment {
+  id          String   @id @default(cuid())
+  teacherId   String
+  subjectId   String
+  title       String
+  description String
+  marks       Int
+  deadline    DateTime
+  pdfUrl      String?
+  createdAt   DateTime @default(now())
+
+  teacher     Teacher  @relation(fields: [teacherId], references: [id])
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  submissions Submission[]
+}
+
+model Submission {
+  id            String   @id @default(cuid())
+  assignmentId  String
+  studentId     String
+  fileUrl       String
+  status        SubmissionStatus @default(UPLOAD)
+  submittedAt   DateTime?
+  acceptedAt    DateTime?
+  marksAwarded  Int?
+
+  assignment    Assignment @relation(fields: [assignmentId], references: [id])
+  student       Student    @relation(fields: [studentId], references: [id])
+
+  @@unique([assignmentId, studentId])
+}
+
  

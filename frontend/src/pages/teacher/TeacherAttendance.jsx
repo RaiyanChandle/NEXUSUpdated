@@ -133,8 +133,10 @@ const TeacherAttendance = () => {
         params: { subjectId: selectedCourse.subjectId, classId: selectedCourse.classId },
         headers: { Authorization: `Bearer ${token}` },
       });
-      setAttendanceStudents(stuRes.data.students);
-      setAttendance(stuRes.data.students.map(s => ({ studentId: s.id, present: true, name: s.name, email: s.email })));
+      setAttendance(
+        stuRes.data.students
+          .map(s => ({ studentId: s.id, present: true, name: s.name, email: s.email, rollno: s.rollno }))
+      );
       setAttendanceStep(true);
     } catch (err) {
       setError("Failed to create session or fetch students");
@@ -250,6 +252,7 @@ const TeacherAttendance = () => {
             <table className="min-w-full text-white mb-4">
               <thead>
                 <tr>
+                  <th className="px-4 py-2 text-left">Roll No</th>
                   <th className="px-4 py-2 text-left">Name</th>
                   <th className="px-4 py-2 text-left">Email</th>
                   <th className="px-4 py-2 text-left">Present</th>
@@ -258,6 +261,7 @@ const TeacherAttendance = () => {
               <tbody>
                 {attendance.map((a) => (
                   <tr key={a.studentId} className="border-b border-violet-700 last:border-0">
+                    <td className="px-4 py-2">{a.rollno ?? '-'}</td>
                     <td className="px-4 py-2">{a.name}</td>
                     <td className="px-4 py-2">{a.email}</td>
                     <td className="px-4 py-2">
@@ -299,6 +303,7 @@ const TeacherAttendance = () => {
                 <table className="min-w-full text-white mb-4">
                   <thead>
                     <tr>
+                      <th className="px-4 py-2 text-left">Roll No</th>
                       <th className="px-4 py-2 text-left">Name</th>
                       <th className="px-4 py-2 text-left">Email</th>
                       <th className="px-4 py-2 text-left">Present</th>
@@ -307,6 +312,7 @@ const TeacherAttendance = () => {
                   <tbody>
                     {attendance.map((a) => (
                       <tr key={a.studentId} className="border-b border-violet-700 last:border-0">
+                        <td className="px-4 py-2">{a.rollno ?? '-'}</td>
                         <td className="px-4 py-2">{a.name}</td>
                         <td className="px-4 py-2">{a.email}</td>
                         <td className="px-4 py-2">

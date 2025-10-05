@@ -14,8 +14,18 @@ export const createStudent = async (req, res) => {
       return res.status(409).json({ message: 'Student with this email already exists' });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
+    let rollno = 1;
+    if (classId) {
+      // Count unique students already enrolled in this class (distinct studentId)
+      const uniqueStudentIds = await prisma.enrollment.findMany({
+        where: { classId },
+        select: { studentId: true },
+        distinct: ['studentId']
+      });
+      rollno = uniqueStudentIds.length + 1;
+    }
     const student = await prisma.student.create({
-      data: { name, email, password: hashedPassword, createdById: req.Adminid },
+      data: { name, email, password: hashedPassword, createdById: req.Adminid, rollno },
     });
     // create Enrollments for each subject if classId and subjectIds are provided
     let enrollments = [];
@@ -51,13 +61,14 @@ export const getStudents = async (req, res) => {
       include: {
         enrollments: {
           include: {
-            class: true,
             subject: true
           }
         }
       }
     });
-    return res.status(200).json({ students });
+    return res.status(200)    // Attach rollno to each student in the response (for compatibility if frontend expects it flat)
+    const studentsWithRoll = students.map(s => ({ ...s, rollno: s.rollno }));
+    res.json({ students: studentsWithRoll });
   } catch (e) {
     res.status(500).json({ message: 'Internal server error', error: e.message });
   }

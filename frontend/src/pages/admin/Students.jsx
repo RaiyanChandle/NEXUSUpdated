@@ -148,14 +148,14 @@ const AdminStudents = () => {
         >
           {loading ? "Creating..." : "Create Student"}
         </button>
-        {message && <div className="text-center text-red-500">{message}</div>}
       </form>
       <div className="overflow-x-auto rounded-lg shadow">
         <table className="min-w-full bg-violet-900/80 text-white text-sm sm:text-base">
           <thead>
             <tr>
-              <th className="px-4 sm:px-6 py-3 text-left font-semibold">Name</th>
-              <th className="px-4 sm:px-6 py-3 text-left font-semibold">Email</th>
+              <th className="px-4 py-3 text-left font-semibold">Roll No</th>
+              <th className="px-4 py-3 text-left font-semibold">Name</th>
+              <th className="px-4 py-3 text-left font-semibold">Email</th>
               <th className="px-4 sm:px-6 py-3 text-left font-semibold">Class</th>
             </tr>
           </thead>
@@ -169,15 +169,16 @@ const AdminStudents = () => {
               }
               return (
                 <tr key={s.id}>
-                  <td className="px-4 sm:px-6 py-3">{s.name}</td>
-                  <td className="px-4 sm:px-6 py-3">{s.email}</td>
+                  <td className="px-4 py-2">{s.rollno}</td>
+                  <td className="px-4 py-2">{s.name}</td>
+                  <td className="px-4 py-2">{s.email}</td>
                   <td className="px-4 sm:px-6 py-3">{className}</td>
                 </tr>
               );
             })}
             {students.length === 0 && (
               <tr>
-                <td colSpan={2} className="px-4 sm:px-6 py-6 text-center text-violet-300">
+                <td colSpan={4} className="px-4 sm:px-6 py-6 text-center text-violet-300">
                   No students created yet.
                 </td>
               </tr>
