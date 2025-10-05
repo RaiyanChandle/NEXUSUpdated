@@ -54,6 +54,23 @@ export const createStudent = async (req, res) => {
   }
 };
 
+export const deleteStudent = async (req, res) => {
+  try {
+    const { studentId } = req.params;
+    // Delete submissions
+    await prisma.submission.deleteMany({ where: { studentId } });
+    // Delete attendance records
+    await prisma.attendanceRecord.deleteMany({ where: { studentId } });
+    // Delete enrollments
+    await prisma.enrollment.deleteMany({ where: { studentId } });
+    // Delete student
+    await prisma.student.delete({ where: { id: studentId } });
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ message: 'Internal server error', error: e.message });
+  }
+};
+
 export const getStudents = async (req, res) => {
   try {
     const students = await prisma.student.findMany({
@@ -66,7 +83,6 @@ export const getStudents = async (req, res) => {
         }
       }
     });
-    return res.status(200)    // Attach rollno to each student in the response (for compatibility if frontend expects it flat)
     const studentsWithRoll = students.map(s => ({ ...s, rollno: s.rollno }));
     res.json({ students: studentsWithRoll });
   } catch (e) {

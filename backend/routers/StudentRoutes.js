@@ -2,6 +2,7 @@ import express from "express";
 import { studentSignIn } from "../controllers/Student/StudentAuthController.js";
 import { studentGoogleOAuth } from "../controllers/Student/StudentGoogleOAuthController.js";
 import { studentAuth } from "../middlewares/StudentAuthMiddleware.js";
+import { getStudentEnrollments } from "../controllers/Student/StudentEnrollmentController.js";
 
 import { getStudentSubjects } from "../controllers/Student/StudentSubjectsController.js";
 import { getNotesForSubject } from "../controllers/Student/StudentNotesController.js";
@@ -27,6 +28,7 @@ router.get("/announcements", studentAuth, getStudentAnnouncements);
 router.get("/library/books", getBooksForStudent);
 
 router.get("/profile", studentAuth, getStudentProfile);
+router.get("/enrollments", studentAuth, getStudentEnrollments);
 router.post("/profile/password", studentAuth, updateStudentPassword);
 
 router.get("/assignments", studentAuth, listStudentAssignments);

@@ -1,4 +1,19 @@
 import { PrismaClient } from '@prisma/client';
+
+// Get all submissions for a given assignment (teacher)
+export const getAssignmentSubmissions = async (req, res) => {
+  try {
+    const { assignmentId } = req.query;
+    if (!assignmentId) return res.status(400).json({ message: 'assignmentId required' });
+    const submissions = await prisma.submission.findMany({
+      where: { assignmentId },
+      include: { student: true }
+    });
+    res.json({ submissions });
+  } catch (e) {
+    res.status(500).json({ message: 'Internal server error', error: e.message });
+  }
+};
 import cloudinary from '../../cloudinary.js';
 import streamifier from 'streamifier';
 
