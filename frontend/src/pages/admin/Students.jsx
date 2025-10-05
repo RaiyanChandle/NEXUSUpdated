@@ -10,7 +10,25 @@ const AdminStudents = () => {
   const [subjects, setSubjects] = useState([]);
   const [selectedSubjects, setSelectedSubjects] = useState([]);
 
+  const [deleteModal, setDeleteModal] = useState({ open: false, studentId: null });
+
+  const handleDeleteStudent = async () => {
+    try {
+      const token = localStorage.getItem("nexus_admin_jwt");
+      await axios.delete(`${API_URL}/admin/students/${deleteModal.studentId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setDeleteModal({ open: false, studentId: null });
+      fetchStudents();
+    } catch {
+      alert('Failed to delete student');
+      setDeleteModal({ open: false, studentId: null });
+    }
+  };
+
+
   const fetchStudents = async () => {
+
     try {
       const token = localStorage.getItem("nexus_admin_jwt");
       const res = await axios.get(`${API_URL}/admin/students`, {
@@ -173,6 +191,14 @@ const AdminStudents = () => {
                   <td className="px-4 py-2">{s.name}</td>
                   <td className="px-4 py-2">{s.email}</td>
                   <td className="px-4 sm:px-6 py-3">{className}</td>
+                  <td className="px-4 py-2">
+                    <button
+                      className="px-3 py-1 rounded bg-red-700 hover:bg-red-600 text-white font-semibold"
+                      onClick={() => setDeleteModal({ open: true, studentId: s.id })}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               );
             })}
@@ -186,6 +212,19 @@ const AdminStudents = () => {
           </tbody>
         </table>
       </div>
+      {/* Confirmation Modal */}
+      {deleteModal.open && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-violet-950 rounded-lg shadow-xl p-8 max-w-sm w-full">
+            <h3 className="text-lg font-semibold text-violet-200 mb-4">Confirm Delete</h3>
+            <p className="text-violet-300 mb-6">Are you sure you want to delete this student? This action cannot be undone.</p>
+            <div className="flex justify-end gap-4">
+              <button className="px-4 py-2 rounded bg-gray-600 hover:bg-gray-500 text-white font-semibold" onClick={() => setDeleteModal({ open: false, studentId: null })}>Cancel</button>
+              <button className="px-4 py-2 rounded bg-red-700 hover:bg-red-600 text-white font-semibold" onClick={handleDeleteStudent}>Delete</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

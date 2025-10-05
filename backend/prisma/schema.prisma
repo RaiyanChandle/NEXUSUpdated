@@ -24,6 +24,7 @@ model Admin {
 }
 
 model Teacher {
+  meetings   Meeting[] @relation("MeetingTeacher")
   id        String   @id @default(cuid())
   name      String
   email     String   @unique
@@ -56,6 +57,7 @@ model Student {
 }
 
 model Class {
+  meetings   Meeting[] @relation("MeetingClass")
   id        String   @id @default(cuid())
   name      String
   section   String?
@@ -72,6 +74,7 @@ model Class {
 
 
 model Subject {
+  meetings   Meeting[] @relation("MeetingSubject")
   id        String   @id @default(cuid())
   name      String
   classId   String
@@ -198,6 +201,20 @@ model Assignment {
   teacher     Teacher  @relation(fields: [teacherId], references: [id])
   subject     Subject  @relation(fields: [subjectId], references: [id])
   submissions Submission[]
+}
+
+model Meeting {
+  id        String   @id @default(cuid())
+  roomName  String
+  subjectId String
+  classId   String
+  teacherId String
+  startTime DateTime
+  createdAt DateTime @default(now())
+
+  subject   Subject  @relation("MeetingSubject", fields: [subjectId], references: [id])
+  class     Class    @relation("MeetingClass", fields: [classId], references: [id])
+  teacher   Teacher  @relation("MeetingTeacher", fields: [teacherId], references: [id])
 }
 
 model Submission {
