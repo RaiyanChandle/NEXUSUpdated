@@ -9,6 +9,8 @@ import { uploadBook, getBooks } from "../controllers/Admin/LibraryController.js"
 import { getDashboardCounts } from "../controllers/Admin/AdminDashboardController.js";
 import upload from "../middlewares/upload.js";
 import { createStudent, getStudents, deleteStudent } from "../controllers/Admin/AdminStudentControllers.js";
+import { updateStudent } from "../controllers/Admin/AdminStudentEditController.js";
+import { getAdminProfile, updateAdminProfile } from "../controllers/Admin/AdminProfileController.js";
 import express from "express";
 const router = express.Router();
 
@@ -31,5 +33,7 @@ router.post("/students", adminAuth, createStudent);
 router.get("/students", adminAuth, getStudents);
 router.delete("/students/:studentId", adminAuth, deleteStudent);
 router.get("/dashboard-counts", adminAuth, getDashboardCounts);
-
+router.get("/profile", adminAuth, getAdminProfile);
+router.put("/profile", adminAuth, updateAdminProfile);
+router.put("/students/:id",adminAuth,updateStudent);
 export default router;
