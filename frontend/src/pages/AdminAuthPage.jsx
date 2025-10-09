@@ -12,6 +12,7 @@ const AdminAuthPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,14 +94,29 @@ const AdminAuthPage = () => {
             className="rounded-lg px-4 py-2 bg-violet-950 border border-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 text-white placeholder-violet-400"
             required
           />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            className="rounded-lg px-4 py-2 bg-violet-950 border border-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 text-white placeholder-violet-400"
-            required
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              className="rounded-lg px-4 py-2 bg-violet-950 border border-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 text-white placeholder-violet-400 w-full pr-10"
+              required
+            />
+            <button
+              type="button"
+              tabIndex={-1}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-violet-400 hover:text-violet-200 focus:outline-none"
+              onClick={() => setShowPassword(v => !v)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5 0-9-4-9-7s4-7 9-7c2.03 0 3.92.62 5.475 1.675m2.122 2.122A9.956 9.956 0 0121 12c0 1.306-.835 3.417-2.474 5.126M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm7.5 0c0 3-4 7-9 7s-9-4-9-7 4-7 9-7 9 4 9 7z" /></svg>
+              )}
+            </button>
+          </div>
           <button
             type="submit"
             className="rounded-lg px-4 py-2 bg-violet-600 hover:bg-violet-500 active:bg-violet-700 text-white font-semibold shadow transition-colors duration-200"
