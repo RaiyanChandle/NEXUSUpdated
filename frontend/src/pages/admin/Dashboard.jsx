@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -7,6 +8,17 @@ const AdminDashboard = () => {
   const [counts, setCounts] = useState({ students: 0, teachers: 0, subjects: 0, classes: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  // Stat cards config for navigation
+  const statConfigs = [
+    { label: "Students", value: counts.students, route: "/admin/students" },
+    { label: "Teachers", value: counts.teachers, route: "/admin/teachers" },
+    { label: "Subjects", value: counts.subjects, route: "/admin/subjects" },
+    { label: "Classes", value: counts.classes, route: "/admin/classes" },
+    { label: "Announcements", value: counts.announcements, route: "/admin/announcements" },
+    { label: "Books in Library", value: counts.books, route: "/admin/library" },
+  ];
 
   useEffect(() => {
     const fetchCounts = async () => {
@@ -35,18 +47,29 @@ const AdminDashboard = () => {
         <div className="text-red-500">{error}</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full max-w-2xl">
-          <StatCard label="Students" value={counts.students} />
-          <StatCard label="Teachers" value={counts.teachers} />
-          <StatCard label="Subjects" value={counts.subjects} />
-          <StatCard label="Classes" value={counts.classes} />
+          {statConfigs.map(stat => (
+            <StatCard
+              key={stat.label}
+              label={stat.label}
+              value={stat.value}
+              onClick={() => navigate(stat.route)}
+            />
+          ))}
         </div>
       )}
     </div>
   );
 };
 
-const StatCard = ({ label, value }) => (
-  <div className="bg-violet-900/80 rounded-lg shadow p-8 flex flex-col items-center">
+const StatCard = ({ label, value, onClick }) => (
+  <div
+    className="bg-violet-900/80 rounded-lg shadow p-8 flex flex-col items-center cursor-pointer hover:bg-violet-800 transition-colors duration-150"
+    onClick={onClick}
+    tabIndex={0}
+    role="button"
+    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
+    title={`Go to ${label}`}
+  >
     <div className="text-4xl font-bold text-violet-300 mb-2">{value}</div>
     <div className="text-lg text-violet-200">{label}</div>
   </div>

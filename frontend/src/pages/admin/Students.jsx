@@ -142,6 +142,14 @@ const AdminStudents = () => {
         {subjects.length > 0 && (
           <div className="flex flex-col gap-2">
             <label className="text-violet-300 font-semibold">Assign Subjects</label>
+            <button
+              type="button"
+              className="mb-2 self-end px-3 py-1 rounded bg-violet-700 hover:bg-violet-600 text-white text-xs font-semibold"
+              onClick={() => setSelectedSubjects(subjects.map(s => s.id))}
+              disabled={subjects.length === 0}
+            >
+              Select All
+            </button>
             <div className="flex flex-wrap gap-2">
               {subjects.map(subj => (
                 <label key={subj.id} className="flex items-center gap-2 bg-violet-900 px-3 py-1 rounded cursor-pointer">
