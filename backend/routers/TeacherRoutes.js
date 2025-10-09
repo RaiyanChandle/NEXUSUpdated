@@ -4,6 +4,7 @@ import { teacherGoogleOAuth } from "../controllers/Teacher/TeacherGoogleOAuthCon
 import { getTeacherCoursesAndClasses, getStudentsForCourseClass } from "../controllers/Teacher/TeacherStudentsController.js";
 import { getTeacherSubjects } from "../controllers/Teacher/TeacherSubjectsController.js";
 import { teacherAuth } from "../middlewares/TeacherAuthMiddleware.js";
+import { getTeacherDashboardStats } from "../controllers/Teacher/TeacherDashboardController.js";
 import upload from "../middlewares/upload.js";
 import { uploadNote, getTeacherNotes } from "../controllers/Teacher/TeacherNotesController.js";
 import { createAssignment, listAssignments, acceptSubmission, getAssignmentSubmissions } from "../controllers/Teacher/TeacherAssignmentController.js";
@@ -14,6 +15,7 @@ router.post("/signin", teacherSignIn);
 router.post("/google-oauth", teacherGoogleOAuth);
 router.get("/subjects", teacherAuth, getTeacherSubjects);
 router.get("/courses-classes", teacherAuth, getTeacherCoursesAndClasses);
+router.get("/dashboard-stats", teacherAuth, getTeacherDashboardStats);
 router.get("/course-students", teacherAuth, getStudentsForCourseClass);
 
 import {
