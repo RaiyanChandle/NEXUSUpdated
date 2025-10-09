@@ -2,6 +2,7 @@ import express from "express";
 import { studentSignIn } from "../controllers/Student/StudentAuthController.js";
 import { studentGoogleOAuth } from "../controllers/Student/StudentGoogleOAuthController.js";
 import { studentAuth } from "../middlewares/StudentAuthMiddleware.js";
+import { getStudentDashboardStats } from "../controllers/Student/StudentDashboardController.js";
 import { getStudentEnrollments } from "../controllers/Student/StudentEnrollmentController.js";
 
 import { getStudentSubjects } from "../controllers/Student/StudentSubjectsController.js";
@@ -35,5 +36,7 @@ router.get("/assignments", studentAuth, listStudentAssignments);
 router.post("/assignments/delete", studentAuth, deleteSubmission);
 import upload from "../middlewares/upload.js";
 router.post("/assignments/submit", studentAuth, upload.single('pdf'), submitAssignment);
+
+router.get("/dashboard-stats", studentAuth, getStudentDashboardStats);
 
 export default router;
