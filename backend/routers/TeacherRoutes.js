@@ -17,7 +17,7 @@ router.get("/subjects", teacherAuth, getTeacherSubjects);
 router.get("/courses-classes", teacherAuth, getTeacherCoursesAndClasses);
 router.get("/dashboard-stats", teacherAuth, getTeacherDashboardStats);
 router.get("/course-students", teacherAuth, getStudentsForCourseClass);
-
+import { getStudentsWithAttendance } from "../controllers/Teacher/TeacherStudentsController.js";
 import {
   createAttendanceSession,
   getSessionsForCourse,
@@ -44,5 +44,7 @@ router.post("/profile", teacherAuth, updateTeacherProfile);
 router.post("/assignments/upload", teacherAuth, upload.single('pdf'), createAssignment);
 router.get("/assignments", teacherAuth, listAssignments);
 router.post("/assignments/accept", teacherAuth, acceptSubmission);
+
+router.get("/course-students-attendance", teacherAuth, getStudentsWithAttendance);
 
 export default router;
