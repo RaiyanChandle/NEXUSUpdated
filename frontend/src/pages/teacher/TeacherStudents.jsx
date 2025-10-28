@@ -35,10 +35,10 @@ const TeacherStudents = () => {
     setStudents([]);
     setLoading(true);
     setModalOpen(true);
-    setPage(1); // reset pagination
+    setPage(1);
     try {
       const token = localStorage.getItem("nexus_teacher_jwt");
-      const res = await axios.get(`${API_URL}/teacher/course-students`, {
+      const res = await axios.get(`${API_URL}/teacher/course-students-attendance`, {
         params: { subjectId: course.subjectId, classId: course.classId },
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -69,7 +69,7 @@ const TeacherStudents = () => {
   const handleNext = () => setPage((prev) => Math.min(prev + 1, totalPages));
 
   return (
-    <div className="p-8 w-full max-w-4xl mx-auto">
+    <div className="p-8 w-full max-w-6xl mx-auto overflow-x-auto">
       <h2 className="text-2xl font-bold mb-6 text-violet-300">
         My Courses & Students
       </h2>
@@ -97,49 +97,60 @@ const TeacherStudents = () => {
       </div>
 
       {modalOpen && selected && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-violet-950 p-6 rounded-lg shadow-xl w-full max-w-2xl relative">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+          <div className="bg-violet-950 rounded-lg shadow-2xl w-[95%] max-w-5xl h-[85vh] flex flex-col relative">
+            {/* Close button */}
             <button
-              className="absolute top-2 right-2 text-white text-xl"
+              className="absolute top-2 right-3 text-white text-2xl hover:text-violet-300 transition"
               onClick={closeModal}
             >
               &times;
             </button>
 
-            <div className="mb-4 text-lg text-violet-200 font-semibold text-center">
+            {/* Modal Header */}
+            <div className="p-4 border-b border-violet-800 text-center text-lg font-semibold text-violet-200">
               Students for {selected.subject.name} ({selected.class.name})
             </div>
 
-            {loading ? (
-              <div className="text-violet-400">Loading students...</div>
-            ) : error ? (
-              <div className="text-red-400">{error}</div>
-            ) : (
-              <>
-                <table className="min-w-full text-white">
-                  <thead>
+            {/* Table Container */}
+            <div className="flex-1 overflow-auto p-4">
+              {loading ? (
+                <div className="text-violet-400 text-center py-8">
+                  Loading students...
+                </div>
+              ) : error ? (
+                <div className="text-red-400 text-center py-8">{error}</div>
+              ) : (
+                <table className="min-w-full text-white whitespace-nowrap border-collapse">
+                  <thead className="sticky top-0 bg-violet-900 z-10">
                     <tr>
                       <th className="px-4 py-2 text-left">Roll No</th>
                       <th className="px-4 py-2 text-left">Name</th>
                       <th className="px-4 py-2 text-left">Email</th>
+                      <th className="px-4 py-2 text-left">Avg Attendance</th>
                     </tr>
                   </thead>
                   <tbody>
                     {paginatedStudents.map((s) => (
                       <tr
                         key={s.id}
-                        className="border-b border-violet-700 last:border-0"
+                        className="border-b border-violet-800 last:border-0 hover:bg-violet-900/40"
                       >
                         <td className="px-4 py-2">{s.rollno || "-"}</td>
                         <td className="px-4 py-2">{s.name}</td>
-                        <td className="px-4 py-2">{s.email}</td>
+                        <td className="px-4 py-2 break-all">{s.email}</td>
+                        <td className="px-4 py-2">
+                          {typeof s.avgAttendance === "number"
+                            ? `${s.avgAttendance.toFixed(1)}%`
+                            : "-"}
+                        </td>
                       </tr>
                     ))}
                     {students.length === 0 && (
                       <tr>
                         <td
-                          colSpan={2}
-                          className="px-4 py-6 text-center text-violet-300"
+                          colSpan={4}
+                          className="px-4 py-8 text-center text-violet-300"
                         >
                           No students found for this course/class.
                         </td>
@@ -147,30 +158,30 @@ const TeacherStudents = () => {
                     )}
                   </tbody>
                 </table>
+              )}
+            </div>
 
-                {/* Pagination controls */}
-                {students.length > pageSize && (
-                  <div className="flex justify-center items-center gap-4 mt-4">
-                    <button
-                      className="px-3 py-1 bg-violet-800 hover:bg-violet-700 text-white rounded disabled:opacity-50"
-                      onClick={handlePrev}
-                      disabled={page === 1}
-                    >
-                      Previous
-                    </button>
-                    <span className="text-violet-300">
-                      Page {page} of {totalPages}
-                    </span>
-                    <button
-                      className="px-3 py-1 bg-violet-800 hover:bg-violet-700 text-white rounded disabled:opacity-50"
-                      onClick={handleNext}
-                      disabled={page === totalPages}
-                    >
-                      Next
-                    </button>
-                  </div>
-                )}
-              </>
+            {/* Pagination controls */}
+            {students.length > pageSize && (
+              <div className="flex justify-center items-center gap-4 p-3 border-t border-violet-800">
+                <button
+                  className="px-3 py-1 bg-violet-800 hover:bg-violet-700 text-white rounded disabled:opacity-50"
+                  onClick={handlePrev}
+                  disabled={page === 1}
+                >
+                  Previous
+                </button>
+                <span className="text-violet-300">
+                  Page {page} of {totalPages}
+                </span>
+                <button
+                  className="px-3 py-1 bg-violet-800 hover:bg-violet-700 text-white rounded disabled:opacity-50"
+                  onClick={handleNext}
+                  disabled={page === totalPages}
+                >
+                  Next
+                </button>
+              </div>
             )}
           </div>
         </div>

@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
+
+import { saveBlobToFile } from "../../utils/saveBlobToFile";
 
 const TeacherMeeting = () => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -10,6 +12,10 @@ const TeacherMeeting = () => {
   const [meetings, setMeetings] = useState({});
   const [creating, setCreating] = useState(false);
   const [jitsiModal, setJitsiModal] = useState({ open: false, meeting: null });
+  const [recording, setRecording] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const mediaRecorderRef = useRef(null);
+  const recordedChunksRef = useRef([]);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -71,6 +77,44 @@ const TeacherMeeting = () => {
     setCreating(false);
   };
 
+  // Screen recording logic
+  const startScreenRecording = async () => {
+    if (!recording) {
+      try {
+        const iframe = document.getElementById('jitsi-iframe');
+        // Use displayMedia to capture screen
+        const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+        recordedChunksRef.current = [];
+        const mediaRecorder = new window.MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp9' });
+        mediaRecorderRef.current = mediaRecorder;
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data.size > 0) recordedChunksRef.current.push(e.data);
+        };
+        mediaRecorder.onstop = async () => {
+          setSaving(true);
+          const blob = new Blob(recordedChunksRef.current, { type: 'video/webm' });
+          // Save to user's system (browser limitation: user chooses location)
+          // Build filename: subject-date.webm
+          let subject = jitsiModal.meeting?.subject?.name || 'meeting';
+          let date = jitsiModal.meeting?.startTime ? new Date(jitsiModal.meeting.startTime).toISOString().slice(0,10) : new Date().toISOString().slice(0,10);
+          subject = subject.replace(/[^a-zA-Z0-9-_]/g, '_');
+          const filename = `${subject}-${date}.webm`;
+          saveBlobToFile(blob, filename);
+          setSaving(false);
+        };
+        mediaRecorder.start();
+        setRecording(true);
+      } catch (err) {
+        alert('Screen recording failed: ' + err.message);
+      }
+    } else {
+      // Stop recording
+      if (mediaRecorderRef.current) {
+        mediaRecorderRef.current.stop();
+      }
+      setRecording(false);
+    }
+  };
 
   return (
     <div className="p-8 w-full max-w-4xl mx-auto">
@@ -153,13 +197,20 @@ const TeacherMeeting = () => {
           <div className="bg-violet-950 rounded-xl shadow-2xl p-2 w-[90vw] h-[90vh] relative flex flex-col items-center">
             <button className="absolute top-4 right-8 text-white text-3xl z-10" onClick={() => setJitsiModal({ open: false, meeting: null })}>&times;</button>
             <h3 className="text-xl font-semibold text-violet-200 mb-2 mt-2">Meeting: {jitsiModal.meeting.subject?.name} - {jitsiModal.meeting.class?.name}</h3>
-            <div className="w-full h-full flex-1">
+            <div className="w-full h-full flex-1 relative">
               <iframe
                 title="Jitsi Meet"
                 src={`https://meet.jit.si/${jitsiModal.meeting.roomName}#userInfo.displayName=Teacher`}
                 allow="camera; microphone; fullscreen; display-capture"
                 style={{ width: '100%', height: '95%', border: 0, borderRadius: '0.75rem' }}
+                id="jitsi-iframe"
               />
+              <button
+                onClick={startScreenRecording}
+                className="absolute top-2 left-2 z-20 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-semibold shadow"
+              >
+                {recording ? (saving ? 'Saving...' : 'Stop Recording') : 'Start Recording'}
+              </button>
             </div>
           </div>
         </div>
