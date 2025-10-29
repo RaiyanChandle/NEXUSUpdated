@@ -47,7 +47,7 @@ const links = [
     icon: <IconChalkboard className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
   },
   {
-    label: "Digital Board",
+    label: "WhiteBoard",
     href: "/teacher/digital-board",
     icon: <IconPresentationAnalytics className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
   },
