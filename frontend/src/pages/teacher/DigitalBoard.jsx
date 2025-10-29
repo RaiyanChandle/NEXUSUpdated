@@ -197,7 +197,7 @@ export default function DigitalBoard() {
     }, []);
 
     return (
-        <div className={`${isFullscreen ? 'fixed inset-0 z-50' : 'h-[calc(100vh-5rem)]'} flex flex-col bg-white dark:bg-neutral-900`}>
+        <div className={`${isFullscreen ? 'fixed inset-0 z-50' : 'h-screen'} flex flex-col bg-white dark:bg-neutral-900`}>
             {/* Header */}
             <div className="flex items-center justify-between p-4 bg-gradient-to-r from-violet-500 to-purple-600 text-white shadow-lg">
                 <div className="flex items-center gap-3">
