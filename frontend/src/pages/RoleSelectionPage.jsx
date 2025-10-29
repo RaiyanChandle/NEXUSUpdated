@@ -14,7 +14,7 @@ const roles = [
       "Manage classes, assignments, grades, and communicate with students.",
   },
   {
-    name: "Student",
+    name: "Students",
     description:
       "Access classes, assignments, grades, and communicate with teachers.",
   },
@@ -53,7 +53,7 @@ const RoleSelectionPage = () => {
                 onClick={() => {
                   if (role.name === "Admin") navigate("/admin-signin");
                   else if (role.name === "Teacher") navigate("/teacher-signin");
-                  else if (role.name === "Student") navigate("/student-signin");
+                  else if (role.name === "Students") navigate("/student-signin");
                 }}
               >
                 Sign In
