@@ -218,7 +218,7 @@ const HaveCall = () => {
           onMouseOver={(e) => (e.currentTarget.style.background = "#0e7c6a")}
           onMouseOut={(e) => (e.currentTarget.style.background = "#12A594")}
         >
-          <PhoneOutgoing size={22} /> <span>Talk to Assistant</span>
+          <PhoneOutgoing size={22} /> <span>Talk to S.A.N.S.A.</span>
         </button>
       )}
 

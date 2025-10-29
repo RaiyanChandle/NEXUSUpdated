@@ -32,6 +32,7 @@ import StudentAssignments from "./pages/student/StudentAssignments";
 import StudentLibrary from "./pages/student/StudentLibrary";
 import StudentProfile from "./pages/student/StudentProfile";
 import StudentAnnouncements from "./pages/student/StudentAnnouncements";
+import GeminiChat from "./pages/student/GeminiChat";
 import TeacherAssignments from './pages/teacher/TeacherAssignments';
 import StudentMeetings from './pages/student/StudentMeetings';
 
@@ -84,6 +85,7 @@ function App() {
           <Route path="announcements" element={<StudentAnnouncements />} />
           <Route path="meetings" element={<StudentMeetings />} />
           <Route path="profile" element={<StudentProfile />} />
+          <Route path="gemini-ai" element={<GeminiChat />} />
           <Route index element={<StudentDashboard />} />
         </Route>
       </Routes>
