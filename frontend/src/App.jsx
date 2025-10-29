@@ -23,6 +23,7 @@ import TeacherMeeting from "./pages/teacher/TeacherMeeting";
 import TeacherNotes from "./pages/teacher/TeacherNotes";
 import TeacherAnnouncements from "./pages/teacher/TeacherAnnouncements";
 import TeacherProfile from "./pages/teacher/TeacherProfile";
+import DigitalBoard from "./pages/teacher/DigitalBoard";
 import StudentHomeScreen from "./pages/student/StudentHomeScreen";
 import StudentDashboard from "./pages/student/StudentDashboard";
 import StudentSignIn from "./pages/student/StudentSignIn";
@@ -73,6 +74,7 @@ function App() {
           <Route path="meeting" element={<TeacherMeeting />} />
           <Route path="announcements" element={<TeacherAnnouncements />} />
           <Route path="profile" element={<TeacherProfile />} />
+          <Route path="digital-board" element={<DigitalBoard />} />
           <Route index element={<TeacherDashboard />} />
         </Route>
         <Route path="/student" element={<StudentHomeScreen />}>
