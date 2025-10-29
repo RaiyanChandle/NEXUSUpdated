@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import HaveCall from "./HaveCall";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Sidebar, SidebarBody, SidebarLink } from "../../components/ui/Sidebar";
 import { IconChalkboard, IconUserBolt, IconArrowLeft } from "@tabler/icons-react";
@@ -109,6 +110,10 @@ const StudentHomeScreen = () => {
       </Sidebar>
       <div className="flex-1 overflow-y-auto">
         <Outlet />
+      </div>
+      {/* Floating HaveCall widget */}
+      <div style={{position: 'fixed', bottom: 32, right: 32, zIndex: 50}}>
+        <HaveCall />
       </div>
     </div>
   );

@@ -22,13 +22,17 @@ import {
   createAttendanceSession,
   getSessionsForCourse,
   getAttendanceForSession,
-  markAttendance
+  markAttendance,
+  sendAttendanceEmails,
+  sendAverageAttendanceEmails
 } from "../controllers/Teacher/AttendanceSessionController.js";
 
 router.post("/attendance-session", teacherAuth, createAttendanceSession);
 router.get("/attendance-sessions", teacherAuth, getSessionsForCourse);
 router.get("/attendance-records", teacherAuth, getAttendanceForSession);
 router.post("/attendance-records", teacherAuth, markAttendance);
+router.post("/attendance-send-emails", teacherAuth, sendAttendanceEmails);
+router.post("/attendance-send-average", teacherAuth, sendAverageAttendanceEmails);
 
 router.post("/notes/upload", teacherAuth, upload.single('pdf'), uploadNote);
 router.get("/notes", teacherAuth, getTeacherNotes);

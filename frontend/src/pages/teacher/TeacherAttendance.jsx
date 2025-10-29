@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Eye, Edit2, X } from "lucide-react"; // 👈 Added icons
+import { Eye, Edit2, X, Send } from "lucide-react"; // 👈 Added icons
 
 const TeacherAttendance = () => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -16,6 +16,8 @@ const TeacherAttendance = () => {
   const [attendanceSessionId, setAttendanceSessionId] = useState(null);
   const [attendanceStep, setAttendanceStep] = useState(false);
   const [attendanceViewMode, setAttendanceViewMode] = useState(false);
+  const [sendingId, setSendingId] = useState(null);
+  const [sendingAvgId, setSendingAvgId] = useState(null);
 
   // Fetch teacher's courses
   useEffect(() => {
@@ -176,6 +178,40 @@ const TeacherAttendance = () => {
     }
   };
 
+  const handleSendAttendanceEmails = async (sessionId) => {
+    try {
+      setSendingId(sessionId);
+      const token = localStorage.getItem("nexus_teacher_jwt");
+      const res = await axios.post(
+        `${API_URL}/teacher/attendance-send-emails`,
+        { sessionId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      alert(`Emails sent: ${res.data.sent}/${res.data.total}`);
+    } catch {
+      alert("Failed to send attendance emails");
+    } finally {
+      setSendingId(null);
+    }
+  };
+
+  const handleSendAverageEmails = async (course) => {
+    try {
+      setSendingAvgId(course.id);
+      const token = localStorage.getItem("nexus_teacher_jwt");
+      const res = await axios.post(
+        `${API_URL}/teacher/attendance-send-average`,
+        { subjectId: course.subjectId, classId: course.classId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      alert(`Average emails sent: ${res.data.sent}/${res.data.total}`);
+    } catch {
+      alert("Failed to send average attendance emails");
+    } finally {
+      setSendingAvgId(null);
+    }
+  };
+
   return (
     <div className="p-8 w-full max-w-4xl mx-auto">
       <h2 className="text-2xl font-bold mb-6 text-violet-300">Attendance Sessions</h2>
@@ -201,6 +237,14 @@ const TeacherAttendance = () => {
               onClick={() => openViewSessionsModal(c)}
             >
               View Sessions
+            </button>
+            <button
+              className="mt-2 rounded bg-green-600 hover:bg-green-500 px-4 py-2 font-semibold transition-colors disabled:opacity-50"
+              onClick={() => handleSendAverageEmails(c)}
+              disabled={sendingAvgId === c.id}
+              title="Send Average Attendance Emails"
+            >
+              <div className="flex items-center gap-2"><Send size={16} /> Send Avg Emails</div>
             </button>
           </div>
         ))}
@@ -251,6 +295,14 @@ const TeacherAttendance = () => {
                           onClick={() => handleViewAttendance(s, false)}
                         >
                           <Edit2 size={18} />
+                        </button>
+                        <button
+                          className="text-green-400 hover:text-green-300 disabled:opacity-50"
+                          title="Send Attendance Emails"
+                          onClick={() => handleSendAttendanceEmails(s.id)}
+                          disabled={sendingId === s.id}
+                        >
+                          <Send size={18} />
                         </button>
                       </td>
                     </tr>
