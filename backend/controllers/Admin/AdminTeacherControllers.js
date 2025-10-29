@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import nodemailer from "nodemailer";
 
 const prisma = new PrismaClient();
 
@@ -29,7 +30,36 @@ export const createTeacher = async (req, res) => {
         });
       }
     }
-    return res.status(201).json({ message: "Teacher created", teacher });
+    // Send login credentials email to the teacher (non-blocking)
+    let emailSent = false;
+    try {
+      const host = process.env.SMTP_HOST || 'smtp.gmail.com';
+      const port = parseInt(process.env.SMTP_PORT || '465');
+      const user = process.env.SMTP_USER || process.env.EMAIL_USER;
+      const pass = process.env.SMTP_PASS || process.env.EMAIL_PASS;
+      const from = process.env.EMAIL_FROM || user;
+      if (host && user && pass) {
+        const transporter = nodemailer.createTransport({ host, port, secure: port === 465, auth: { user, pass } });
+        const html = `
+          <div>
+            <p>Dear ${name},</p>
+            <p>Your teacher account on <strong>NEXUS</strong> has been created.</p>
+            <p>You can sign in using the following credentials:</p>
+            <ul>
+              <li><strong>Email:</strong> ${email}</li>
+              <li><strong>Password:</strong> ${password}</li>
+            </ul>
+            <p>For security, please change your password after your first login.</p>
+            <p>Regards,<br/>NEXUS Team</p>
+          </div>
+        `;
+        await transporter.sendMail({ from, to: email, subject: 'Your NEXUS Teacher Account', html });
+        emailSent = true;
+      }
+    } catch (_) {
+      // Intentionally ignore email errors to not block teacher creation
+    }
+    return res.status(201).json({ message: "Teacher created", teacher, emailSent });
   } catch (e) {
     res.status(500).json({ message: "Internal server error" });
   }
