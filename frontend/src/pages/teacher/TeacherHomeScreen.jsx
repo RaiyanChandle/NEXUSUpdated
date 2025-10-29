@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Sidebar, SidebarBody, SidebarLink } from "../../components/ui/Sidebar";
-import { IconChalkboard, IconUserBolt, IconArrowLeft } from "@tabler/icons-react";
+import { IconChalkboard, IconUserBolt, IconArrowLeft, IconPresentationAnalytics } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { cn } from "../../components/lib/utils";
 
@@ -45,6 +45,11 @@ const links = [
     label: "Announcements",
     href: "/teacher/announcements",
     icon: <IconChalkboard className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
+  },
+  {
+    label: "Digital Board",
+    href: "/teacher/digital-board",
+    icon: <IconPresentationAnalytics className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
   },
   {
     label: "Profile",

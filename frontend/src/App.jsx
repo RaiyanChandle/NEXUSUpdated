@@ -34,6 +34,7 @@ import StudentProfile from "./pages/student/StudentProfile";
 import StudentAnnouncements from "./pages/student/StudentAnnouncements";
 import TeacherAssignments from './pages/teacher/TeacherAssignments';
 import StudentMeetings from './pages/student/StudentMeetings';
+import DigitalBoard from './pages/teacher/DigitalBoard';
 
 function App() {
   const AdminGoogleOAuthWrapper=()=>{
@@ -72,6 +73,7 @@ function App() {
           <Route path="notes" element={<TeacherNotes />} />
           <Route path="meeting" element={<TeacherMeeting />} />
           <Route path="announcements" element={<TeacherAnnouncements />} />
+          <Route path="digital-board" element={<DigitalBoard />} />
           <Route path="profile" element={<TeacherProfile />} />
           <Route index element={<TeacherDashboard />} />
         </Route>
