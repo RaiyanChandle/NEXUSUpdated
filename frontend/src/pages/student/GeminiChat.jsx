@@ -205,10 +205,10 @@ const GeminiChat = () => {
 
         {/* Footer */}
         <div className="text-center mt-2 shrink-0">
-          <p className="text-slate-400 text-xs sm:text-sm flex items-center justify-center gap-2">
+          {/* <p className="text-slate-400 text-xs sm:text-sm flex items-center justify-center gap-2">
             <Sparkles className="w-4 h-4" />
             Powered by Gemini AI
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
