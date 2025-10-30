@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Excalidraw } from "@excalidraw/excalidraw";
 import "@excalidraw/excalidraw/index.css";
-import { 
-    Share2, 
-    Download, 
-    Trash2, 
-    Copy, 
+import {
+    Share2,
+    Download,
+    Trash2,
+    Copy,
     Check,
     X,
     Maximize2,
@@ -50,7 +50,7 @@ export default function DigitalBoard() {
             const elements = excalidrawApiRef.current.getSceneElements();
             const appState = excalidrawApiRef.current.getAppState();
             const files = excalidrawApiRef.current.getFiles();
-            
+
             const data = {
                 elements,
                 appState: {
@@ -64,7 +64,7 @@ export default function DigitalBoard() {
                 },
                 files
             };
-            
+
             localStorage.setItem("nexus_digital_board", JSON.stringify(data));
         } catch (error) {
             console.error("Auto-save failed:", error);
@@ -73,12 +73,12 @@ export default function DigitalBoard() {
 
     const handleShare = () => {
         if (!excalidrawApiRef.current) return;
-        
+
         try {
             const elements = excalidrawApiRef.current.getSceneElements();
             const appState = excalidrawApiRef.current.getAppState();
             const files = excalidrawApiRef.current.getFiles();
-            
+
             const data = {
                 elements,
                 appState: {
@@ -86,17 +86,17 @@ export default function DigitalBoard() {
                 },
                 files
             };
-            
+
             // Create a shareable JSON string
             const shareableData = JSON.stringify(data);
             const base64Data = btoa(shareableData);
-            
+
             setShareData({
                 raw: shareableData,
                 encoded: base64Data,
                 url: `${window.location.origin}/teacher/digital-board?share=${base64Data}`
             });
-            
+
             setShowShareModal(true);
         } catch (error) {
             console.error("Failed to create share data:", error);
@@ -106,7 +106,7 @@ export default function DigitalBoard() {
 
     const handleCopyShareLink = async () => {
         if (!shareData) return;
-        
+
         try {
             await navigator.clipboard.writeText(shareData.url);
             setCopied(true);
@@ -119,7 +119,7 @@ export default function DigitalBoard() {
 
     const handleCopyShareCode = async () => {
         if (!shareData) return;
-        
+
         try {
             await navigator.clipboard.writeText(shareData.encoded);
             setCopied(true);
@@ -132,12 +132,12 @@ export default function DigitalBoard() {
 
     const handleDownload = () => {
         if (!excalidrawApiRef.current) return;
-        
+
         try {
             const elements = excalidrawApiRef.current.getSceneElements();
             const appState = excalidrawApiRef.current.getAppState();
             const files = excalidrawApiRef.current.getFiles();
-            
+
             const data = {
                 type: "excalidraw",
                 version: 2,
@@ -146,12 +146,12 @@ export default function DigitalBoard() {
                 appState,
                 files
             };
-            
+
             const dataStr = JSON.stringify(data, null, 2);
             const dataUri = "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
-            
+
             const exportFileDefaultName = `nexus-board-${new Date().toISOString().split('T')[0]}.excalidraw`;
-            
+
             const linkElement = document.createElement("a");
             linkElement.setAttribute("href", dataUri);
             linkElement.setAttribute("download", exportFileDefaultName);
@@ -164,7 +164,7 @@ export default function DigitalBoard() {
 
     const handleClear = () => {
         if (!excalidrawApiRef.current) return;
-        
+
         const confirmed = window.confirm("Are you sure you want to clear the entire board?");
         if (confirmed) {
             excalidrawApiRef.current.resetScene();
@@ -184,7 +184,7 @@ export default function DigitalBoard() {
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const shareCode = urlParams.get('share');
-        
+
         if (shareCode && excalidrawApiRef.current) {
             try {
                 const decoded = atob(shareCode);
@@ -197,7 +197,7 @@ export default function DigitalBoard() {
     }, []);
 
     return (
-        <div className={`${isFullscreen ? 'fixed inset-0 z-50' : 'h-[calc(100vh-5rem)]'} flex flex-col bg-white dark:bg-neutral-900`}>
+        <div className={`${isFullscreen ? 'fixed inset-0 z-50' : 'h-[100vh]'} flex flex-col bg-white dark:bg-neutral-900`}>
             {/* Header */}
             <div className="flex items-center justify-between p-4 bg-gradient-to-r from-violet-500 to-purple-600 text-white shadow-lg">
                 <div className="flex items-center gap-3">
@@ -211,7 +211,7 @@ export default function DigitalBoard() {
                         <p className="text-sm text-white/80">Draw, collaborate, and share</p>
                     </div>
                 </div>
-                
+
                 {/* Action Buttons */}
                 <div className="flex items-center gap-2">
                     <button
@@ -222,7 +222,7 @@ export default function DigitalBoard() {
                         {theme === "dark" ? "🌙" : "☀️"}
                         <span className="hidden lg:inline">Theme</span>
                     </button>
-                    
+
                     <button
                         onClick={handleShare}
                         className="flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-all duration-200 backdrop-blur-sm"
@@ -231,7 +231,7 @@ export default function DigitalBoard() {
                         <Share2 size={18} />
                         <span className="hidden md:inline">Share</span>
                     </button>
-                    
+
                     <button
                         onClick={handleDownload}
                         className="flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-all duration-200 backdrop-blur-sm"
@@ -240,7 +240,7 @@ export default function DigitalBoard() {
                         <Download size={18} />
                         <span className="hidden lg:inline">Download</span>
                     </button>
-                    
+
                     <button
                         onClick={handleClear}
                         className="flex items-center gap-2 px-4 py-2 bg-red-500/80 hover:bg-red-600 rounded-lg transition-all duration-200"
@@ -249,7 +249,7 @@ export default function DigitalBoard() {
                         <Trash2 size={18} />
                         <span className="hidden lg:inline">Clear</span>
                     </button>
-                    
+
                     <button
                         onClick={toggleFullscreen}
                         className="flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-all duration-200 backdrop-blur-sm"
