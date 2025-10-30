@@ -96,7 +96,7 @@ const GeminiChat = () => {
             </h1>
           </div>
           <p className="text-purple-300 text-sm sm:text-base">
-            Your intelligent conversation partner
+            Your intelligent learning partner
           </p>
         </div>
 
