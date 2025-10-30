@@ -60,10 +60,11 @@ const links = [
   }
 ];
 
+import nexuslogo from '../../assets/nexuslogo.png';
 function Logo() {
   return (
     <a href="#" className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black">
-      <div className="h-5 w-6 shrink-0 rounded-tl-lg rounded-tr-sm rounded-br-lg rounded-bl-sm bg-black dark:bg-white" />
+      <img src={nexuslogo} alt="Nexus Logo" className="h-8 w-8 shrink-0 rounded-lg" />
       <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-medium whitespace-pre text-black dark:text-white">
         NEXUS
       </motion.span>
@@ -73,7 +74,7 @@ function Logo() {
 function LogoIcon() {
   return (
     <a href="#" className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black">
-      <div className="h-5 w-6 shrink-0 rounded-tl-lg rounded-tr-sm rounded-br-lg rounded-bl-sm bg-black dark:bg-white" />
+      <img src={nexuslogo} alt="Nexus Logo" className="h-8 w-8 shrink-0 rounded-lg" />
     </a>
   );
 }
